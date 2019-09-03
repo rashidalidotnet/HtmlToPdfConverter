@@ -1,0 +1,6 @@
+E:\Work\GitHub\HtmlToPdfConverter\HtmlToPdfConverter\HtmlToPdfConverter\bin\Debug\HtmlToPdfConverter.dll
+E:\Work\GitHub\HtmlToPdfConverter\HtmlToPdfConverter\HtmlToPdfConverter\bin\Debug\HtmlToPdfConverter.pdb
+E:\Work\GitHub\HtmlToPdfConverter\HtmlToPdfConverter\HtmlToPdfConverter\obj\Debug\HtmlToPdfConverter.csprojResolveAssemblyReference.cache
+E:\Work\GitHub\HtmlToPdfConverter\HtmlToPdfConverter\HtmlToPdfConverter\obj\Debug\HtmlToPdfConverter.dll
+E:\Work\GitHub\HtmlToPdfConverter\HtmlToPdfConverter\HtmlToPdfConverter\obj\Debug\HtmlToPdfConverter.pdb
+E:\Work\GitHub\HtmlToPdfConverter\HtmlToPdfConverter\HtmlToPdfConverter\bin\Debug\itextsharp.dll
