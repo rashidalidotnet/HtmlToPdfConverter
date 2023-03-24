@@ -44,10 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HtmlToPdfConverter.cs" />
+    <Compile Include="HtmlToPdf.cs" />
     <Compile Include="MyPdfPageEventHandler.cs" />
-    <Compile Include="PdfPageMargins.cs" />
-    <Compile Include="PdfPageSize.cs" />
+    <Compile Include="DTO\PdfPageOutput.cs" />
+    <Compile Include="DTO\PdfPageProps.cs" />
+    <Compile Include="DTO\PdfPageMargins.cs" />
+    <Compile Include="DTO\PdfPageSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using HtmlToPdfConverter.DTO;
 
 namespace HtmlToPdfConverter
 {
     public class MyPdfPageEventHandler : PdfPageEventHelper
     {
-        public bool IsPrintPageNumber { get; set; }
+        private PdfPageProps _pageProps;
 
-        public string PageBottomLeftCornerText { get; set; }
-
-        public int PageBottomLeftCornerTextFontSize { get; set; }
+        public MyPdfPageEventHandler(PdfPageProps pageProps)
+        {
+            _pageProps = pageProps;
+        }
 
         public int PageNumber { get; set; }
 
         public int TotalPages { get; set; }
-
-        public int CountOfAdditionalPages { get; set; }
-
-        public string FooterCenterText { get; set; }
 
         PdfContentByte cb;
 
@@ -29,40 +25,6 @@ namespace HtmlToPdfConverter
         BaseFont bf = null;
 
         DateTime PrintTime = DateTime.Now;
-
-        #region Properties
-        private string _Title;
-        public string Title
-        {
-            get { return _Title; }
-            set { _Title = value; }
-        }
-
-        private string _HeaderLeft;
-        public string HeaderLeft
-        {
-            get { return _HeaderLeft; }
-            set { _HeaderLeft = value; }
-        }
-        private string _HeaderRight;
-        public string HeaderRight
-        {
-            get { return _HeaderRight; }
-            set { _HeaderRight = value; }
-        }
-        private Font _HeaderFont;
-        public Font HeaderFont
-        {
-            get { return _HeaderFont; }
-            set { _HeaderFont = value; }
-        }
-        private Font _FooterFont;
-        public Font FooterFont
-        {
-            get { return _FooterFont; }
-            set { _FooterFont = value; }
-        }
-        #endregion
 
         public override void OnOpenDocument(PdfWriter writer, Document document)
         {
@@ -95,7 +57,7 @@ namespace HtmlToPdfConverter
 
             cb.SetRGBColorFill(0, 0, 0);
 
-            if (IsPrintPageNumber)
+            if (_pageProps.IsPrintPageNumber)
             {
                 cb.BeginText();
                 cb.SetFontAndSize(bf, 8);
@@ -108,18 +70,18 @@ namespace HtmlToPdfConverter
             }
 
             cb.BeginText();
-            cb.SetFontAndSize(bf, PageBottomLeftCornerTextFontSize);
-            cb.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, PageBottomLeftCornerText, pageSize.GetLeft(130), pageSize.GetBottom(30), 0);
+            cb.SetFontAndSize(bf, _pageProps.PageBottomLeftCornerTextFontSize);
+            cb.ShowTextAligned(PdfContentByte.ALIGN_RIGHT, _pageProps.PageBottomLeftCornerText, pageSize.GetLeft(130), pageSize.GetBottom(30), 0);
             cb.EndText();
 
             cb.SetFontAndSize(FontFactory.GetFont(FontFactory.HELVETICA_BOLD).BaseFont, 8);
             ColumnText ct = new ColumnText(writer.DirectContent);
             ct.SetSimpleColumn(new Rectangle(160, 0, (pageSize.Width - 160), 50));
 
-            if (!string.IsNullOrEmpty(FooterCenterText))
+            if (!string.IsNullOrEmpty(_pageProps.FooterCenterText))
             {
                 Font f = new Font(FontFactory.GetFont(FontFactory.HELVETICA_BOLD).BaseFont, 8, Font.NORMAL, BaseColor.BLACK);
-                Paragraph p = new Paragraph(FooterCenterText, f);
+                Paragraph p = new Paragraph(_pageProps.FooterCenterText, f);
                 p.Alignment = Element.ALIGN_CENTER;
                 ct.AddElement(p);
                 ct.Go();
@@ -128,7 +90,7 @@ namespace HtmlToPdfConverter
 
         public override void OnCloseDocument(PdfWriter writer, Document document)
         {
-            TotalPages = (writer.PageNumber - 1) + CountOfAdditionalPages;
+            TotalPages = (writer.PageNumber - 1) + _pageProps.CountOfAdditionalPages;
 
             base.OnCloseDocument(writer, document);
             template.BeginText();
